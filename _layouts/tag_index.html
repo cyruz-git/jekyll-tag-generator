@@ -1,7 +1,24 @@
 ---
-layout: default
+layout: page
+has_title: 1
 ---
 
-<ul>{% for tag in site.tags %} 
-  <li><a href="/tag/{{ tag[0] }}">{{ tag[0] }}</a> <span>{{ tag[1].size }}</span></li>{% endfor %}
-</ul>
+<h1 class="cust-page-title">
+  <a href="{{ site.blog }}">Blog</a> &raquo; 
+  <a href="{{ site.tag_index_dir }}">Tags</a>
+</h1>
+
+{% capture site_tags %}{% for tag in site.tags %}{{ tag | first }}{% unless forloop.last %},{% endunless %}{% endfor %}{% endcapture %}
+{% assign tag_words = site_tags | split:',' | sort %}
+
+<div class="cust-blog">
+  {% for item in (0..site.tags.size) %}{% unless forloop.last %}
+  {% capture this_word %}{{ tag_words[item] | strip_newlines }}{% endcapture %}
+  <div class="cust-blog-item">
+    <h5 class="cust-blog-item-title">
+      <a href="{{ tag_index_dir }}{{ this_word }}/">{{ this_word }}</a>&nbsp;&nbsp;
+      <span class="badge">{{ site.tags[this_word].size }}</span>
+    </h5>
+  </div> <!-- div class="cust-blog-item" -->
+  {% endunless %}{% endfor %}
+</div> <!-- div class="cust-blog" -->
