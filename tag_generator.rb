@@ -22,6 +22,7 @@ module Jekyll
     def initialize(site, base, dir, tag)
       super(site, base, dir)
       self.data['tag'] = tag
+      self.data['title'] = 'Tags &raquo; ' + tag
     end
 
     def layout_page
@@ -54,6 +55,11 @@ module Jekyll
 
   # Represents a page with all the tags
   class TagIndexPage < BaseTagPage
+    def initialize(site, base, dir)
+      super(site, base, dir)
+      self.data['title'] = 'Tags'
+    end
+
     def layout_page
       'tag_index.html'
     end
